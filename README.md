@@ -44,7 +44,7 @@ Machine states follow the **PackML standard (ISA-TR88.00.02)** OEE is calculated
 # Technologies
 - **Languages:** HTML5, CSS3, JavaScript
 - **Libraries & Tools:** Chart.js, Git, GitHub, VSC
-- **Industrial Standards Referenced:** PackML (ISA-TR88.00.02), ISO 22400-2:2014, GMP, ISO 14644, ISO 2859-1
+- **Industrial Standards Referenced: PackML (ISA-TR88.00.02), ISO 22400-2:2014, GMP, ISO 14644, ISO 2859-1
 
 # Installation
 No package installation is required.
