@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="variables.css"/>
     <link rel="stylesheet" href="reset.css"/>
     <link rel="stylesheet" href="layout.css"/>
-    <link rel="stylesheet" href="elements.css"/>
+    <link rel="stylesheet" href="element.css"/>
     <link rel="stylesheet" href="animations.css"/>
 
     <!-- Fonts de Google Apis-->
@@ -22,20 +22,333 @@
 </head>
 
 <body>
-    <header class="topbar" role="banner">
-       
+    <header class="topbar">
+        <div class="logo">
+            <span class="logo-name">PlantSight</span>
+        </div>
+
+        <!--Botones de navegación -->
+        <nav class="botones">
+            <button class="home-boton">HOME</button>
+            <button class="boton">ALERTS</button>
+            <button class="boton">MACHINES</button>
+            <button class="boton">QUALITY</button>
+            <button class="boton">REPORTS</button>
+        </nav>
+
+        <div class="reloj-selector">
+            <div class="time-display" id="reloj"></div>
+            
+            <!--Indicador live -->
+            <div class="live-indicator">
+                <span class="indicator"></span>
+                <span>Live</span>
+            </div>
+
+            <!-- Los 3 botones de turno -->
+            <div class="seleccionar-turno">
+                <button class="boton-turno"
+                onclick="setShift(this,'A')">Shift A</button>
+                <button class="boton-turno"
+                onclick="setShift(this,'B')">Shift B</button>
+                <button class="boton-turno"
+                onclick="setShift(this,'C')">Shift C</button>
+            </div>
+
+            <!-- Nombre del operario -->
+            <div class="nombre-operador">
+                <span id="operador">Ing. García</span>
+            </div>
+        </div>
     </header>
 
+    <main class="contenido-principal">
 
-    <main>
+        <div class="view-active" id="view-contenido">
 
+            <section class="hero">
+                <div class="hero__bg-text">PRODUCTION</div>
+                <!-- COLUMNA IZQUIERDA: título y números -->
+                <div class="hero-izquierda">
+                    <p class="hero-panel">Operator Panel</p>
+                    <h1 class="hero-titulo">Real-Time<br/>
+                        <span class="hero-titulo-2">Monitoring</span><br/>
+                        System
+                    </h1>
+                    
+                    <p class="hero-descripcion"> 
+                        Real-time monitoring of manufacturing KPIs, equipment health, 
+                        and production performance to enable data-driven operational decisions.
+                    </p>
+                                        
+                    <!-- los 3 números grandes (JS pone los valores aquí) -->
+                    <div class="hero-valores">
+                        <div class="hero-val-label">
+                            <span class="hero-val" id="heroUnidades">—</span>
+                            <span class="hero-label">Units<br/>Produced</span>
+                        </div>
+                        
+                        <div class="hero-val-label hero-val-2">
+                            <span class="hero-val" id="heroTurno">—</span>
+                            <span class="hero-label">Shift<br/>Target</span>
+                        </div>
+                        
+                        <div class="hero-val-label">
+                            <span class="hero-val" id="heroGrado">—</span>
+                            <span class="hero-label">Target<br/>Achievement</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- COLUMNA DERECHA: panel de datos ambientales -->
+                <div class="hero-derecha">
+                    <div class="panel">
+                        <div class="panel-header">
+                            <span>Environmental Conditions</span>
+                        </div>
+                        
+                        <div class="panel-body">
+                            <div class="fila-body">
+                                <span class="icono-panel">🌡</span>
+                                <span class="label-panel">Temperature</span>
+                                <span class="val-panel" id="temp-fila">—</span>
+                            </div>
+
+                            <div class="fila-body">
+                                <span class="icono-panel">💧</span>
+                                <span class="label-panel">Relative Humidity</span>
+                                <span class="val-panel" id="humedad-fila">—</span>
+                            </div>
+
+                            <div class="fila-body">
+                                <span class="icono-panel">🔊</span>
+                                <span class="label-panel">Noise Level</span>
+                                <span class="val-panel" id="ruido-fila">—</span>
+                            </div>
+
+                            <div class="fila-body">
+                                <span class="icono-panel">⚡</span>
+                                <span class="label-panel">Energy Consumption</span>
+                                <span class="val-panel" id="energ-fila">—</span>
+                            </div>
+
+                            <div class="fila-body">
+                                <span class="icono-panel">🌬</span>
+                                <span class="label-panel">Air Quality</span>
+                                <span class="val-panel" id="aire-fila">—</span>
+                            </div>
+                        </div>
+
+                        <div class="panel-header panel-header-2">
+                            <span>Operational Information</span>
+                        </div>
+
+                        <div class="panel-body">
+                            <div class="fila-body">
+                                <span class="icono-panel">⚙️</span>
+                                <span class="label-panel">Active Machines</span>
+                                <span class="val-panel" id="maquina-fila">—</span>
+                            </div>
+
+                            <div class="fila-body">
+                                <span class="icono-panel">⏱</span>
+                                <span class="label-panel">Shift Time</span>
+                                <span class="val-panel" id="turno-fila">—</span>
+                            </div>
+
+                            <div class="fila-body">
+                                <span class="icono-panel">🛑</span>
+                                <span class="label-panel">Unplanned Downtime</span>
+                                <span class="val-panel" id="paros-fila">—</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Alerta crítica (Solo si hay una ACTIVA) -->
+                <div class="alerta-critica" id="criticalBadge" hidden>
+                    <span class="icono-critico">⚠</span>
+                    <span id="textoAlerta">Critical Alert</span>
+                </div>
+            </section>
+
+            <div class="filtros-areas">
+                <span class="filtro-label">AREA:</span>
+                <button class="area active" onclick="setArea(this,'all')">All</button>
+                <button class="area" onclick="setArea(this,'Making')">Making</button>
+                <button class="area" onclick="setArea(this,'Packing')">Packing</button>
+                <button class="area" onclick="setArea(this,'Warehouse')">Warehouse</button>
+                <button class="area" onclick="setArea(this,'Quality')">Quality</button>
+                <button class="area" onclick="setArea(this,'HSE')">HSE</button>
+                <span class="filtro-updated">
+                    Updated: <span id="updated-id">—</span>
+                </span>
+            </div>
+
+            <section class="tarjetas">
+
+                <!-- TARJETA 1: Resumen OEE -->
+                <article class="tarjeta-contenido">
+                    <div class="tarjeta-header">
+                        <span class="tarjeta-titulo">Overview</span>
+                        <button class="tarjeta-boton" onclick="switchView('machines')">↗</button>
+                    </div>
+                    
+                    <div class="tarjeta-body">
+                        <div class="estado-tarjeta">
+                            <span class="estado-tarj-val" id="overOEE">—</span>
+                            <span class="estado-tarj-unit">%</span>
+                            <span class="estado-tarj-label">Overall OEE</span>
+                        </div>
+                        <div class="estado-tarjeta">
+                            <span class="estado-tarj-val" id="overCapacity">—</span>
+                            <span class="estado-tarj-unit">%</span>
+                            <span class="estado-tarj-label">Utilization</span>
+                        </div>
+                        <div class="estado-tarjeta">
+                            <span class="estado-tarj-val" id="overHours">—</span>
+                            <span class="estado-tarj-unit">hr</span>
+                            <span class="estado-tarj-label">Operating Hours</span>
+                        </div>
+                        
+                        <!-- Gráfica de tendencia OEE (Chart.js la dibuja aquí), es invisible hasta que lo dibuja -->
+                        <div style="position:relative; height:70px; margin-top:8px;">
+                            <canvas id="OEE-grafica"></canvas>
+                        </div>
+                    </div>
+                </article>
+                
+                <!-- TARJETA 2: Producción X hora -->
+                <article class="tarjeta-contenido">
+                    <div class="tarjeta-header">
+                        <span class="tarjeta-titulo">Production</span>
+                        <div class="card-legend">
+                            <span class="legend-dot legend-dot-unid"></span><span>Units</span>
+                            <span class="legend-dot legend-dot-meta" style="margin-left:8px;"></span><span>Target</span>
+                        </div>
+                        <button class="tarjeta-boton" onclick="switchView('reports')">↗</button>
+                    </div>
+                    
+                    <div class="tarjeta-body" style="position:relative; height:110px;">
+                        <canvas id="produccion-grafica"></canvas>
+                    </div>
+                </article>
+                
+                <!-- TARJETA 3: Estado de máquinas mini -->
+                <article class="tarjeta-contenido">
+                    <div class="tarjeta-header">
+                        <span class="tarjeta-titulo">Machines</span>
+                        <button class="tarjeta-boton" onclick="switchView('machines')">↗</button>
+                    </div>
+                    
+                    <!-- JS renderiza las tarjetas mini de máquinas aquí -->
+                    <div class="tarjeta-body" id="estado-maquina"></div>
+                </article>
+                
+                <!-- TARJETA 4: Temperaturas -->
+                <article class="tarjeta-contenido">
+                    <div class="tarjeta-header">
+                        <span class="tarjeta-titulo">Temperatures</span>
+                        <button class="tarjeta-boton" onclick="switchView('quality')">↗</button>
+                    </div>
+                    <!-- JS renderiza las barras de temperatura aquí -->
+                    <div class="tarjeta-body" id="temp-body"></div>
+                </article>
+            </section>
+        </div>
+
+        <!-- ALERTAS -->
+        <div class="view-oculta" id="view-alerts">
+            <div class="view-header">
+                <h2 class="view-titulo">Active Alerts</h2>
+                <span class="view-subtitulo" id="alerts-subtitulo">Shift A</span>
+            </div>
+            <!-- JS escribe las tarjetas de alerta aquí -->
+            <div class="alerts-contenedor" id="alerts-contenedor"></div>
+        </div>
+
+        <!-- MACHINES -->
+        <div class="view-oculta" id="view-machines">
+            <div class="view-header">
+                <h2 class="view-titulo">Machine Status</h2>
+                <span class="view-subtitulo" id="machines-subtitulo">Shift A</span>
+            </div>
+            <!-- JS escribe las tarjetas completas de cada máquina aquí -->
+            <div class="maquinas-grid" id="maquinas-grid"></div>
+        </div>
+
+        <!-- QUALITY -->
+        <div class="view-oculta" id="view-quality">
+            <div class="view-header">
+                <h2 class="view-titulo">Quality Control</h2>
+                <span class="view-subtitulo">OEE by area and critical parameters</span>
+            </div>
+            <div class="quality-grid">
+
+                <!-- OEE por área con barras -->
+                <div class="quality-card">
+                    <h3 class="quality-titulo">OEE by Area</h3>
+                    <div id="oee-barras"></div>
+                </div>
+
+                <!-- Gráfica de tendencia de defectos -->
+                <div class="quality-card">
+                    <h3 class="quality-titulo">Defect Trend</h3>
+                    <div style="position:relative; height:220px;">
+                        <canvas id="defectos-grafica"></canvas>
+                    </div>
+                </div>
+
+                <!-- Tabla de parámetros críticos -->
+                <div class="quality-card">
+                    <h3 class="quality-titulo">Critical Parameters</h3>
+                    <div id="quality-params"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- REPORTS -->
+        <div class="view-oculta" id="view-reports">
+            <div class="view-header">
+                <h2 class="view-titulo">Shift Reports</h2>
+                <span class="view-subtitulo">Automated shift documentation</span>
+            </div>
+            <div class="reports-grid">
+
+                <!-- Vista previa del reporte generado -->
+                <div class="report-card">
+                    <h3 class="quality-titulo">Report Preview</h3>
+                    <div class="report-preview" id="report-preview"></div>
+                </div>
+
+                <!-- Botones de exportación -->
+                <div class="report-card">
+                    <h3 class="quality-titulo">Export</h3>
+                    <p class="report-desc">
+                        This report includes KPIs, machine status, and shift alert log.
+                    </p>
+                    <div class="report-ahorro">
+                        <span>⏱ Estimated time saved</span>
+                        <span class="report-ahorro-val">~31.5 min/shift</span>
+                    </div>
+                    <div class="report-botones">
+                        <button class="report-btn-primary" onclick="exportReport()">
+                            ↓ Export shift report (.txt)
+                        </button>
+                        <button class="report-btn-secondary" onclick="exportCSV()">
+                            ↓ Export machine CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
-
-    <script>
-
-    </script>
-
+    <!-- JS (el orden importa) -->
+    <script src="state.js"></script>
+    <script src="data.js"></script>
+    <script src="funciones.js"></script>
+    <script src="ui.js"></script>
+    <script src="app.js"></script>
 </body>
-
 </html>
