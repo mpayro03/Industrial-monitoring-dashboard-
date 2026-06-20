@@ -1,0 +1,71 @@
+
+:root {
+/* Paleta de colores de la interfaz */
+    --bg-principal:    #fdfcfbeb;
+    --bg-tarjeta:      #f9f4ef;
+    --bg-panel:        #DDD9D3;
+
+    --borde:           #a0948740;
+    --borde-fuerte:    #a0948773;
+    --texto-principal: #3D3530;
+    --texto-secundario:#6B6057;
+    --texto-muted:     #9E9589;
+    --texto-inverso:   #F0EDE8;
+
+    --verde:           #8B9E77;
+    --arena:           #C9B99A;
+    --terra:           #C17F59;
+    --azul:            #7A92A8;
+    --ambar:           #C9A05A;
+    --rojo:            #B86B6B;
+
+/* Estados operativos de la maquinaria */
+    --running-color:   #8B9E77;
+    --running-bg:      #8b9e771f;
+    --idle-color:      #C9A05A;
+    --idle-bg:         #c9a05a1f;
+    --fault-color:     #B86B6B;
+    --fault-bg:        #b86b6b1f;
+    --maint-color:     #7A92A8;
+    --maint-bg:        #7a92a81f;
+
+    --oee-bueno:       #8B9E77;
+    --oee-regular:     #C9A05A;
+    --oee-malo:        #B86B6B;
+
+    --temp-safe:       #8B9E77;
+    --temp-warning:    #C9A05A;
+    --temp-critical:   #B86B6B;
+
+    --fuente-body:     'Inter', system-ui, sans-serif;
+    --fuente-mono:     'DM Mono', 'Courier New', monospace;
+
+    --texto-xs:   11px;
+    --texto-sm:   12px;
+    --texto-base: 13px;
+    --texto-md:   14px;
+    --texto-lg:   16px;
+    --texto-xl:   20px;
+    --texto-2xl:  28px;
+
+/* Para los layouts responsivos */
+    --espacio-1:  4px;
+    --espacio-2:  8px;
+    --espacio-3:  12px;
+    --espacio-4:  16px;
+    --espacio-5:  20px;
+    --espacio-6:  24px;
+    --espacio-8:  32px;
+    --radio-sm:   6px;
+    --radio-md:   10px;
+    --radio-lg:   16px;
+    --radio-full: 999px;
+
+    --sombra-sm: 0 1px 3px #503c2814;
+    --sombra-md: 0 4px 12px #503c281a;
+    --sombra-lg: 0 8px 24px #503c281f;
+    --topbar-h:  56px;
+
+/* Animaciones */
+    --transicion: 200ms ease;
+}

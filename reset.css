@@ -1,0 +1,38 @@
+body {
+    min-height: 100vh;
+    font-size: 14px;
+    font-family: var(--fuente-body);
+    background: var(--bg-principal);
+    color: var(--texto-principal);
+    -webkit-font-smoothing: antialiased;
+}
+
+button {
+    cursor: pointer;
+    font-family: inherit;
+    border: none;
+    background: none;
+}
+
+canvas {
+    display: block;
+}
+
+ul, 
+ol {
+    list-style: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--terra);
+    outline-offset: 2px;
+    border-radius: 3px;
+}
+
+*, 
+*::before, 
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
