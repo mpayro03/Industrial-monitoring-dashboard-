@@ -13,6 +13,7 @@ Machine states follow the **PackML standard (ISA-TR88.00.02)** OEE is calculated
 - **Area Filtering:**  Interactive filtering by production area (Making, Packing, Warehouse, Quality, HSE) across all dashboard views.
 - **Alerts Panel:** Prioritized alert system with four severity levels (Critical, Warning, Info, OK) including acknowledge functionality and automated action recommendations.
 - **Quality View:** Defect rate trend chart, critical parameter table with regulatory standard references (ISO 22400-2, ISO 2859-1, PackML ISA-88).
+- **Automated Shift Reporting:** One-click generation of a structured shift report (.txt) and machine status export (.csv), modeling an estimated reduction in manual documentation time versus traditional logging methods.
 - **Environmental Monitoring Panel:** Displays room temperature, humidity, noise level, energy consumption, and air quality per shift.
 - **Responsive User Interface:** Fully responsive layout across desktop and mobile viewports.
   
@@ -22,29 +23,23 @@ Machine states follow the **PackML standard (ISA-TR88.00.02)** OEE is calculated
 │   ├── variables.css          # Design token system (colors, typography, spacing)
 │   ├── reset.css              # Browser normalize and global box-sizing
 │   ├── layout.css             # Topbar, hero section, cards row, view structure
-│   ├── element.css         # Cards, status pills, alert cards, bars, buttons
+│   ├── element.css            # Cards, status pills, alert cards, bars, buttons
 │   └── animations.css         # Pulse effects, transitions, skeleton loading
 ├── js/
 │   ├── state.js               # Centralized reactive store (Observer pattern)
-│   ├── app.js                 # Main orchestrator, update loop, view navigation
-│   ├── data/
-│   │   ├── simulator.js       # Industrial data simulation engine (replaceable with real API)
-│   │   └── transforms.js      # Data normalization, classification, and formatting
-│   └── ui/
-│       ├── kpi-cards.js       # Hero KPIs and environmental panel rendering
-│       ├── machine-grid.js    # Machine status cards and temperature rows
-│       ├── alerts.js          # Alert panel with priority sorting and acknowledge
-│       ├── charts.js          # Chart.js wrapper for production and OEE charts
-│       ├── export.js          # Shift report (.txt) and CSV generation
-│       └── quality.js         # Quality view parameters and defect trend chart
+│   ├── data.js                # Machine catalog and shift-based simulated data
+│   ├── funciones.js           # Rendering logic, formatting, charts, and report export
+│   ├── ui.js                  # View navigation and shift/area selection handlers
+│   └── app.js                 # Main orchestrator — initializes the app and update loop
 ├── index.html                 # Single entry point — all views rendered here
 └── README.md                  # Project documentation
 ```
-
 # Technologies
 - **Languages:** HTML5, CSS3, JavaScript
 - **Libraries & Tools:** Chart.js, Git, GitHub, VSC
 - **Industrial Standards Referenced: PackML (ISA-TR88.00.02), ISO 22400-2:2014, GMP, ISO 14644, ISO 2859-1
+
+# Live DEMO
 
 # Installation
 No package installation is required.
